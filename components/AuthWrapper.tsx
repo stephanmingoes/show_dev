@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
+import Link from "next/link";
 import React, { useContext } from "react";
 import { UserContext } from "../lib/userContext";
-import { GithubLoginInButtonComponent } from "../pages/auth";
 export default function AuthWrapper({
   children,
 }: {
@@ -12,7 +12,7 @@ export default function AuthWrapper({
   if (!username || !user)
     return (
       <Box maxWidth={"xs"}>
-        <GithubLoginInButtonComponent />
+        <Link href="/auth">Login</Link>
       </Box>
     );
 

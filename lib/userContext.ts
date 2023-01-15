@@ -1,6 +1,9 @@
 import { User } from "firebase/auth";
+import { User as FirebaseUser, UserContextType } from "../types/index";
 import { createContext } from "react";
-export const UserContext = createContext<{
-  user: User | null | undefined;
-  username: string | null;
-}>({ user: null, username: null });
+import { DocumentData } from "firebase/firestore";
+export const UserContext = createContext<UserContextType>({
+  user: null,
+  username: null,
+  firebaseUser: null,
+});

@@ -5,12 +5,12 @@ import Navbar from "./Navbar";
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <Navbar />
-      <Container
-        style={{ height: "100vh", marginTop: "2rem" }}
-        maxWidth="container.xl"
-      >
+      <Container height="full" maxWidth="container.lg">
+        <Navbar />
+        <br />
         {children}
+        <br />
+        <br />
       </Container>
     </>
   );

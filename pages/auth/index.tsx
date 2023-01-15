@@ -12,24 +12,20 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { GithubLoginButton } from "react-social-login-buttons";
-import { signInWithPopup, signOut } from "firebase/auth";
+import { signInWithPopup } from "firebase/auth";
 import { auth, firestore, GithubProvider } from "../../lib/firebase";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { UserContext } from "../../lib/userContext";
 import { PrimaryColor } from "../../constants";
 import { debounce } from "lodash";
 import { doc, getDoc, writeBatch } from "firebase/firestore";
+import DebounceChecker from "../../components/DebounceChecker";
 
 export default function Auth() {
   const router = useRouter();
   const { user, username } = useContext(UserContext);
 
-  if (user && username)
-    return (
-      <Button onClick={() => signOut(auth).catch((err) => console.log(err))}>
-        Logout
-      </Button>
-    );
+  if (user && username) router.push("/show");
 
   return (
     <div
@@ -50,21 +46,13 @@ export default function Auth() {
         overflow="hidden"
         p="2"
       >
-        {user ? (
-          !username ? (
-            <UserForm />
-          ) : null
-        ) : (
-          <GithubLoginInButtonComponent />
-        )}
+        {user && !username ? <UserForm /> : <GithubLoginInButtonComponent />}
       </Box>
     </div>
   );
 }
 
-function GithubLoginInButtonComponent() {
-  const toast = useToast();
-  const router = useRouter();
+export function GithubLoginInButtonComponent() {
   async function Login() {
     try {
       await signInWithPopup(auth, GithubProvider);
@@ -78,7 +66,6 @@ function GithubLoginInButtonComponent() {
 function UserForm() {
   const { user } = useContext(UserContext);
   const toast = useToast();
-  const router = useRouter();
 
   const [isUsernameValid, setIsUsernameValid] = useState(false);
   const [usernameLoading, setUsernameLoading] = useState(false);
@@ -87,6 +74,7 @@ function UserForm() {
     about: "",
     actualname: user?.displayName ?? "",
     githubusername: "",
+    tags: "",
   });
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -107,6 +95,7 @@ function UserForm() {
         displayName: uservals.actualname,
         githubusername: uservals.githubusername,
         about: uservals.about,
+        tags: uservals.tags,
       });
 
       await batch.commit();
@@ -123,6 +112,7 @@ function UserForm() {
         about: "",
         actualname: user?.displayName ?? "",
         githubusername: "",
+        tags: "",
       });
     } catch (error) {
       console.log(error);
@@ -192,8 +182,8 @@ function UserForm() {
           placeholder="Enter username here"
           required
         />
-        <UsernameMessage
-          username={uservals.username}
+        <DebounceChecker
+          name={uservals.username}
           isValid={isUsernameValid}
           loading={usernameLoading}
         />
@@ -228,6 +218,16 @@ function UserForm() {
           required
         />
         {/* ------------------- */}
+        <FormLabel>Tags (Comma Separated)</FormLabel>
+        <Input
+          type="text"
+          name="tags"
+          onChange={handleChange}
+          value={uservals.tags}
+          placeholder="Example - react, nextjs, firebase"
+          required
+        />
+        {/* ------------------- */}
         <Button
           disabled={!isUsernameValid || usernameLoading}
           type="submit"
@@ -242,38 +242,4 @@ function UserForm() {
       </VStack>
     </form>
   );
-}
-function UsernameMessage({
-  username,
-  isValid,
-  loading,
-}: {
-  username: string | null;
-  isValid: boolean;
-  loading: boolean;
-}) {
-  if (loading) {
-    return (
-      <Alert status="info" rounded={5}>
-        <AlertIcon />
-        Checking username validity...
-      </Alert>
-    );
-  } else if (isValid) {
-    return (
-      <Alert status="success" rounded={5}>
-        <AlertIcon />
-        {username} is available 🎊
-      </Alert>
-    );
-  } else if (username && !isValid) {
-    return (
-      <Alert status="error" rounded={5}>
-        <AlertIcon />
-        Oh no!, &quot;{username}&quot; is not valid ☹️
-      </Alert>
-    );
-  } else {
-    return null;
-  }
 }

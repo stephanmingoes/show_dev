@@ -5,10 +5,12 @@ import { UserContext } from "../lib/userContext";
 
 import { UserHook } from "../lib/hooks";
 export default function App({ Component, pageProps }: AppProps) {
-  const { user, username } = UserHook();
+  const { user, username, firebaseUser } = UserHook();
   return (
     <ChakraProvider>
-      <UserContext.Provider value={{ user: user, username: username }}>
+      <UserContext.Provider
+        value={{ user: user, username: username, firebaseUser: firebaseUser }}
+      >
         <Layout>
           <Component {...pageProps} />
         </Layout>

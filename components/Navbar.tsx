@@ -26,8 +26,8 @@ export default function Navbar() {
   const router = useRouter();
   const menuLinks = [
     ["Create Post", "/admin/create"],
-    ["Profile", `/${username}`],
-    ["Home", "/home"],
+    ["Profile", `/admin`],
+    ["Home", "/show"],
   ];
   return (
     <>
@@ -35,13 +35,12 @@ export default function Navbar() {
         minWidth="max-content"
         alignItems="center"
         gap="2"
-        bg={"#f7f7ff"}
-        style={{ padding: "1rem 2rem" }}
+        // bg={"#f7f7ff"}
+        style={{ padding: "1rem 0rem" }}
       >
         <Box>
-          <Link href="/home">
+          <Link href="/show">
             <Heading fontWeight={"extrabold"}>
-              {/* <Text fontSize={"5xl"}>👨‍💻</Text> */}
               Show_
               <Text as={"span"} color={PrimaryColor}>
                 Dev

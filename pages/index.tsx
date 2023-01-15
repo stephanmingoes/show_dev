@@ -39,7 +39,7 @@ export default function Home() {
             alignSelf={"center"}
             position={"relative"}
           >
-            <Link href={"/auth"}>
+            <Link href={"/show"}>
               <Button
                 colorScheme={PrimaryColor}
                 bg={PrimaryColor}

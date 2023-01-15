@@ -1,12 +1,11 @@
-import { CircularProgress, CircularProgressLabel } from "@chakra-ui/react";
+import { Spinner } from "@chakra-ui/react";
 import React from "react";
+import { PrimaryColor } from "../constants";
 
 export default function Loader({ show }: { show: boolean }) {
   return show ? (
     <>
-      <CircularProgress value={40} color="green.400">
-        <CircularProgressLabel>40%</CircularProgressLabel>
-      </CircularProgress>
+      <Spinner color={PrimaryColor} />
     </>
   ) : null;
 }

@@ -7,7 +7,7 @@ import {
   ButtonGroup,
   useToast,
 } from "@chakra-ui/react";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { debounce, kebabCase } from "lodash";
 import MdEditor from "md-editor-rt";
 import "md-editor-rt/lib/style.css";
@@ -197,7 +197,38 @@ export default function PostEdit({
               Save
             </Button>
             {isEdit && (
-              <Button color="white" bg="red.500">
+              <Button
+                color="white"
+                bg="red.500"
+                onClick={async () => {
+                  try {
+                    await deleteDoc(
+                      doc(
+                        firestore,
+                        `users/${user!.uid}/posts`,
+                        router.query.slug as string
+                      )
+                    );
+
+                    toast({
+                      title: "Post Deleted Successfully",
+                      status: "success",
+                      duration: 5000,
+                      isClosable: true,
+                    });
+
+                    router.push("/");
+                  } catch (error) {
+                    console.log(error);
+                    toast({
+                      title: "Something went wrong.",
+                      status: "error",
+                      duration: 5000,
+                      isClosable: true,
+                    });
+                  }
+                }}
+              >
                 Delete Post
               </Button>
             )}

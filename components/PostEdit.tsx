@@ -121,7 +121,7 @@ export default function PostEdit({
         isClosable: true,
       });
 
-      router.push({ pathname: `/show/${username}/${slug}` });
+      router.push({ pathname: `/show` });
     } catch (error) {
       console.log(error);
       toast({

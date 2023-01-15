@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
 import Link from "next/link";
 import React, { useContext } from "react";
 import { UserContext } from "../lib/userContext";
@@ -12,7 +12,9 @@ export default function AuthWrapper({
   if (!username || !user)
     return (
       <Box maxWidth={"xs"}>
-        <Link href="/auth">Login</Link>
+        <Link href="/auth">
+          <Button>Login</Button>
+        </Link>
       </Box>
     );
 

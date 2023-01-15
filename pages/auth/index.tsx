@@ -79,7 +79,7 @@ function UserForm() {
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
-    setUserVals((prev) => ({ ...prev, [name]: value.trim() }));
+    setUserVals((prev) => ({ ...prev, [name]: value }));
   }
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

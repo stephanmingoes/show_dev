@@ -1,6 +1,7 @@
 import { serverTimestamp } from "firebase/firestore";
 import { useRouter } from "next/router";
 import React, { useCallback, useContext, useEffect, useState } from "react";
+import AuthWrapper from "../../components/AuthWrapper";
 import Loader from "../../components/Loader";
 import PostEdit from "../../components/PostEdit";
 import { getUserPostFromFireStore } from "../../lib/firebase";
@@ -45,7 +46,7 @@ export default function Slug() {
   if (loading) return <Loader show={loading} />;
 
   return (
-    <>
+    <AuthWrapper>
       {post && (
         <PostEdit
           post={{
@@ -56,6 +57,6 @@ export default function Slug() {
           isEdit={true}
         />
       )}
-    </>
+    </AuthWrapper>
   );
 }

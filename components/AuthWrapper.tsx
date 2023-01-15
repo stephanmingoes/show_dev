@@ -7,9 +7,9 @@ export default function AuthWrapper({
 }: {
   children: React.ReactNode;
 }) {
-  const { username } = useContext(UserContext);
+  const { username, user } = useContext(UserContext);
 
-  if (!username)
+  if (!username || !user)
     <Link href={"/auth"}>
       <Button>Login</Button>
     </Link>;

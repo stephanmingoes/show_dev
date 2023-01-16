@@ -28,9 +28,9 @@ export default function Home() {
             </Text>
           </Heading>
           <Text color={"gray.500"} fontSize="2xl">
-            A community for developers to share, showcase, and promote their
-            work, gain inspiration, and find opportunities to collaborate and
-            grow
+            Simple Blog Website for developers to share, showcase, and promote
+            their work, gain inspiration, and find opportunities to collaborate
+            and grow.
           </Text>
           <Stack
             direction={"column"}
